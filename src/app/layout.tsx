@@ -46,11 +46,32 @@ export default function RootLayout({
 					content="telephone=no"
 				/>
 			</head>
-			<body className={inter.className}>
-				<ClerkProvider>
-					<LayoutContent>{children}</LayoutContent>
-					<Toaster />
-				</ClerkProvider>
+			<body className="bg-background text-textLight font-sans">
+				<div>
+					<header className="bg-primary p-4 flex items-center justify-between border-b-2 border-gray-700">
+						<div className="flex items-center">
+							<img src="/logo.png" alt="Novamente" className="h-10 mr-2" />
+							<h1 className="text-xl font-bold">Novamente</h1>
+						</div>
+						<nav className="flex space-x-4">
+							<a href="#" className="text-white hover:text-gray-300">Inicio</a>
+							<a href="#" className="text-white hover:text-gray-300">Servicios</a>
+							<a href="#" className="text-white hover:text-gray-300">Contacto</a>
+						</nav>
+					</header>
+					<ClerkProvider>
+						<LayoutContent>{children}</LayoutContent>
+						<Toaster />
+					</ClerkProvider>
+					<footer className="bg-primary p-4 text-center border-t-2 border-gray-700">
+						<p className="text-sm">© 2024 Novamente</p>
+						<div className="flex justify-center space-x-4 mt-2">
+							<a href="#" className="text-white hover:text-gray-300">Facebook</a>
+							<a href="#" className="text-white hover:text-gray-300">Twitter</a>
+							<a href="#" className="text-white hover:text-gray-300">Instagram</a>
+						</div>
+					</footer>
+				</div>
 			</body>
 		</html>
 	);

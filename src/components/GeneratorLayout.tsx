@@ -1,35 +1,33 @@
 "use client";
 
 import { ReactNode } from "react";
+import { Wand2 } from "lucide-react";
 
 interface GeneratorLayoutProps {
-  inputs: React.ReactNode;
-  children: React.ReactNode;
+  inputs: ReactNode;
+  children: ReactNode;
   title: string;
-  action?: React.ReactNode;
 }
 
-export function GeneratorLayout({ inputs, children, title, action }: GeneratorLayoutProps) {
+export function GeneratorLayout({ inputs, children }: GeneratorLayoutProps) {
   return (
     <div className="flex flex-col h-screen overflow-hidden">
-      {/* Header fijo con borde inferior */}
-      <header className="flex items-center justify-between px-6 h-16 bg-white border-b shrink-0">
-        <h1 className="text-2xl font-bold">{title}</h1>
-        {action && <div>{action}</div>}
-      </header>
-
-      {/* Contenedor principal con scroll */}
       <div className="flex-1 flex overflow-hidden">
-        {/* Área de contenido principal con scroll y padding */}
         <main className="flex-1 overflow-y-auto p-6">
           {children}
         </main>
-
-        {/* Sidebar derecho fijo en desktop */}
-        <aside className="hidden md:block w-[400px] border-l bg-white overflow-y-auto">
+        <aside className="w-full md:w-[400px] border-l bg-white overflow-y-auto">
           {inputs}
         </aside>
       </div>
+      {/* Botón "Generar" fijo en la parte inferior derecha */}
+      <button
+        className="fixed bottom-4 right-4 z-[65] justify-center whitespace-nowrap text-sm font-medium
+        bg-black text-white hover:bg-gray-900 rounded-full px-6 py-2 flex items-center gap-2 shadow-lg"
+      >
+        <Wand2 className="w-5 h-5" />
+        <span>Generar</span>
+      </button>
     </div>
   );
 } 

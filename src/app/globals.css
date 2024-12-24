@@ -1,3 +1,4 @@
+@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@400;600&family=Poppins:wght@400;600&display=swap');
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -72,6 +73,11 @@
   }
   body {
     @apply bg-background text-foreground;
+    background-color: #1E1B2E;
+    font-family: 'Manrope', 'Poppins', sans-serif;
+    color: #FFFFFF;
+    margin: 0;
+    padding: 0;
   }
 }
 
@@ -88,4 +94,12 @@
 
 .animate-slide-up {
   animation: slide-up 0.2s ease-out;
+}
+
+input, button {
+  transition: all 0.3s ease;
+}
+
+button:hover {
+  transform: scale(1.02);
 }

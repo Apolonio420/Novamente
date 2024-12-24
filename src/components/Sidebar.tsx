@@ -31,10 +31,8 @@ const sidebarItems: SidebarSection[] = [
   {
     title: "APLICACIÓN",
     items: [
-      { name: "Flujos", icon: <Workflow className="w-4 h-4" />, href: "/" },
-      { name: "Generador Básico", icon: <Sparkles className="w-4 h-4" />, href: "/generator/basic" },
-      { name: "Franatics", icon: <CreditCard className="w-4 h-4" />, href: "/generator/franatics" },
-      { name: "Luján Tech", icon: <Camera className="w-4 h-4" />, href: "/generator/lujan-tech" },
+      { name: "Ya sé lo que quiero generar", icon: <Sparkles className="w-4 h-4" />, href: "/generator" },
+      { name: "Inspírate con nuestros estilos", icon: <SparklesIcon className="w-4 h-4" />, href: "/styles" },
     ]
   },
   {
@@ -47,9 +45,9 @@ const sidebarItems: SidebarSection[] = [
         external: true
       },
       { 
-        name: "Web", 
+        name: "Twitter", 
         icon: <Globe className="w-4 h-4" />, 
-        href: "https://www.morfeoacademy.com/",
+        href: "https://twitter.com/tu_cuenta",
         external: true
       },
       { 
@@ -91,6 +89,7 @@ export function Sidebar() {
         ${isMobile ? (isOpen ? 'translate-x-0' : '-translate-x-full') : 'translate-x-0'}
         w-64 bg-white border-r fixed h-full min-h-screen overflow-y-auto flex flex-col transition-transform duration-300 ease-in-out
         md:translate-x-0 z-40
+        ${isMobile ? 'z-30' : 'z-40'}
       `}>
         {/* Logo and Close Button Container */}
         <div className="sticky top-0 bg-white p-4 border-b flex justify-between items-center">

@@ -56,40 +56,47 @@ export default function BasicGeneratorPage() {
   const inputs = (
     <Card className="rounded-none border-0 p-4">
       <CollapsibleGeneratorForm>
-        <div className="space-y-2">
-          <Label htmlFor="prompt">Prompt</Label>
-          <Input 
-            id="prompt"
-            value={formData.prompt}
-            onChange={(e) => setFormData(prev => ({ ...prev, prompt: e.target.value }))}
-            placeholder="Describe lo que quieres generar..."
-          />
-        </div>
-        <div className="space-y-2">
-          <Label htmlFor="width">Width</Label>
-          <Input 
-            id="width"
-            type="number"
-            value={formData.width}
-            onChange={(e) => setFormData(prev => ({ ...prev, width: parseInt(e.target.value) || 896 }))}
-          />
-        </div>
-        <div className="space-y-2">
-          <Label htmlFor="height">Height</Label>
-          <Input 
-            id="height"
-            type="number"
-            value={formData.height}
-            onChange={(e) => setFormData(prev => ({ ...prev, height: parseInt(e.target.value) || 1152 }))}
-          />
-        </div>
-        <Button 
-          className="w-full" 
-          onClick={handleGenerate}
-          disabled={isGenerating}
-        >
-          {isGenerating ? "Generando..." : "Generar"}
-        </Button>
+        <form className="space-y-4">
+          <div className="space-y-2">
+            <Label htmlFor="prompt">Prompt</Label>
+            <Input 
+              id="prompt"
+              value={formData.prompt}
+              onChange={(e) => setFormData(prev => ({ ...prev, prompt: e.target.value }))}
+              placeholder="Describe lo que quieres generar..."
+              className="w-full p-3 bg-secondary text-white rounded-md border border-primary focus:outline-none"
+            />
+          </div>
+          <div className="flex space-x-4">
+            <div className="space-y-2">
+              <Label htmlFor="width">Width</Label>
+              <Input 
+                id="width"
+                type="number"
+                value={formData.width}
+                onChange={(e) => setFormData(prev => ({ ...prev, width: parseInt(e.target.value) || 896 }))}
+                className="w-full p-3 bg-secondary text-white rounded-md border border-primary focus:outline-none"
+              />
+            </div>
+            <div className="space-y-2">
+              <Label htmlFor="height">Height</Label>
+              <Input 
+                id="height"
+                type="number"
+                value={formData.height}
+                onChange={(e) => setFormData(prev => ({ ...prev, height: parseInt(e.target.value) || 1152 }))}
+                className="w-full p-3 bg-secondary text-white rounded-md border border-primary focus:outline-none"
+              />
+            </div>
+          </div>
+          <Button 
+            className="w-full bg-primary text-white py-3 rounded-md hover:bg-accent"
+            onClick={handleGenerate}
+            disabled={isGenerating}
+          >
+            {isGenerating ? "Generando..." : "Generar"}
+          </Button>
+        </form>
       </CollapsibleGeneratorForm>
     </Card>
   );
@@ -105,7 +112,6 @@ export default function BasicGeneratorPage() {
     <GeneratorLayout 
       inputs={inputs}
       title="Generador Básico"
-      action={generateButton}
     >
       <UserRuns />
     </GeneratorLayout>

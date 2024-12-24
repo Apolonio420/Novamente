@@ -47,6 +47,7 @@ export function ImageGenerationResult({
         }
 
         if (data.image_url) {
+          console.log('Image URL:', data.image_url);
           setImage(data.image_url);
           setLoading(false);
           setStatus("completed");
@@ -83,6 +84,7 @@ export function ImageGenerationResult({
         "overflow-hidden w-full aspect-[512/512] relative",
         className
       )}
+      style={{ zIndex: 10 }}
     >
       {!loading && image && (
         <button 

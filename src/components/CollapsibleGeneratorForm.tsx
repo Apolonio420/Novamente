@@ -21,12 +21,16 @@ export function CollapsibleGeneratorForm({
 
   useEffect(() => {
     const checkMobile = () => {
-      setIsMobile(window.innerWidth < 768);
+      const mobile = window.innerWidth < 768;
+      console.log('isMobile:', mobile);
+      setIsMobile(mobile);
     };
     checkMobile();
     window.addEventListener('resize', checkMobile);
     return () => window.removeEventListener('resize', checkMobile);
   }, []);
+
+  console.log('open:', open);
 
   if (!isMobile) {
     return <div className="space-y-6">{children}</div>;
@@ -55,7 +59,7 @@ export function CollapsibleGeneratorForm({
             onClick={() => setOpen(false)}
           />
           
-          {/* Modal - ajustado para respetar el sidebar */}
+          {/* Modal */}
           <div className="absolute inset-y-0 right-0 left-16 md:left-64 min-h-screen bg-white animate-slide-up">
             <div className="p-6">
               {/* Header */}
