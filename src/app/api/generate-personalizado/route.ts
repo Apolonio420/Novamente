@@ -1,77 +1,54 @@
 import { NextRequest, NextResponse } from "next/server";
+import { auth } from "@clerk/nextjs/server";
+import { generateImage } from "@/server/generate";
 import { db } from "@/db/db";
 import { runs } from "@/db/schema";
-import { auth } from "@clerk/nextjs/server";
-import { ComfyDeploy } from "comfydeploy";
-
-const cd = new ComfyDeploy({
-  bearer: process.env.COMFY_DEPLOY_API_KEY!,
-});
 
 export async function POST(request: NextRequest) {
   try {
     const { userId } = auth();
-    if (!userId) throw new Error("User not found");
+    if (!userId) {
+      return NextResponse.json({ error: "No autorizado" }, { status: 401 });
+    }
 
     const body = await request.json();
     const { nombre, imagen, email } = body;
 
-    // Generar imagen con ComfyDeploy
-    const result = await cd.run.queue({
-      deploymentId: "4bec08ac-4e1b-4ada-bd79-19a1fab8158a",
-      webhook: `${request.nextUrl.origin}/api/webhook`,
-      inputs: {
-        imagen,
-        nombre
-      }
-    });
-
-    if (!result?.runId) {
-      throw new Error("No runId received from ComfyDeploy");
+    // Validar los datos
+    if (!nombre || !imagen || !email) {
+      return NextResponse.json(
+        { error: "Faltan campos requeridos" },
+        { status: 400 }
+      );
     }
+
+    const result = await generateImage(imagen, process.env.VERCEL_URL || "http://localhost:3000", {
+      height: 512,
+      width: 512,
+      lora: "",
+      batchSize: 1
+    });
 
     // Guardar en la base de datos
     await db.insert(runs).values({
-      run_id: result.runId,
+      run_id: result,
       user_id: userId,
+      deployment_id: "e322689e-065a-4d33-aa6a-ee941803ca95",
       live_status: "queued",
-      deployment_id: "4bec08ac-4e1b-4ada-bd79-19a1fab8158a",
       inputs: {
-        nombre,
-        imagen,
-        email
+        prompt: imagen,
+        height: "512",
+        width: "512",
+        lora: "",
+        lora_strength: "0.5"
       }
     });
 
-    // Enviar datos a n8n
-    try {
-      const webhookResponse = await fetch(
-        "https://pauldelavallaz.app.n8n.cloud/webhook/5c01375c-2250-4258-ab88-b50fdf695999",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            email,
-            runId: result.runId,
-            nombre
-          }),
-        }
-      );
-
-      if (!webhookResponse.ok) {
-        console.error("Error al enviar datos a n8n:", await webhookResponse.text());
-      }
-    } catch (webhookError) {
-      console.error("Error enviando a n8n:", webhookError);
-    }
-
-    return NextResponse.json({ runId: result.runId });
+    return NextResponse.json({ runId: result });
   } catch (error) {
-    console.error("Error in generate-personalizado:", error);
+    console.error("Error:", error);
     return NextResponse.json(
-      { error: error instanceof Error ? error.message : "Error al generar la imagen" },
+      { error: "Error al generar la imagen" },
       { status: 500 }
     );
   }
