@@ -7,11 +7,16 @@ import { Input } from "@/components/ui/input";
 import { useState } from "react";
 import { ImageGenerationResult } from "./ImageGenerationResult";
 
-export function GeneradorPersonalizado() {
+interface GeneradorPersonalizadoProps {
+  // ... otras props
+}
+
+export function GeneradorPersonalizado({ /* props */ }: GeneradorPersonalizadoProps) {
   const [nombre, setNombre] = useState("");
   const [imagen, setImagen] = useState("");
   const [email, setEmail] = useState("");
   const [runId, setRunId] = useState<string | null>(null);
+  const [imageUrl, setImageUrl] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -39,6 +44,8 @@ export function GeneradorPersonalizado() {
       }
 
       setRunId(data.runId);
+      // Construir la URL de la imagen basada en el runId
+      setImageUrl(`https://comfy-deploy-output.s3.us-east-2.amazonaws.com/outputs/runs/${data.runId}/image.png`);
     } catch (err) {
       setError(err instanceof Error ? err.message : "Error desconocido");
     }
@@ -96,9 +103,9 @@ export function GeneradorPersonalizado() {
       </Card>
 
       <div>
-        {runId && (
+        {imageUrl && (
           <ImageGenerationResult
-            runId={runId}
+            imageUrl={imageUrl}
             className="w-full"
           />
         )}

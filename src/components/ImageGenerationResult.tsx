@@ -7,9 +7,10 @@ import { cn } from "@/lib/utils";
 
 interface ImageGenerationResultProps {
   imageUrl: string;
+  className?: string;
 }
 
-export function ImageGenerationResult({ imageUrl }: ImageGenerationResultProps) {
+export function ImageGenerationResult({ imageUrl, className }: ImageGenerationResultProps) {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
