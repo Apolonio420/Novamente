@@ -61,7 +61,7 @@
     "@radix-ui/react-collapsible": "^1.0.3"
   },
   "devDependencies": {
-    "@types/node": "^20",
+    "@types/node": "^20.11.0",
     "@types/node-fetch": "^2.6.11",
     "drizzle-kit": "^0.28.1",
     "eslint": "^8",

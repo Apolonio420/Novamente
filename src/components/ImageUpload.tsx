@@ -53,22 +53,18 @@ export function ImageUpload({ value, onChange, accept, className }: ImageUploadP
     onDrop: (acceptedFiles) => {
       const file = acceptedFiles[0];
       if (file) {
-        const target = {
-          files: [file],
-          value: '',
-          name: 'file',
-          type: 'file',
-          validity: {
-            valid: true
-          },
-          validationMessage: '',
-          nodeType: 1,
-          tagName: 'INPUT'
-        } as HTMLInputElement;
+        // Crear un input real para simular el evento
+        const input = document.createElement('input');
+        input.type = 'file';
+        
+        // Crear el FileList simulado
+        const dataTransfer = new DataTransfer();
+        dataTransfer.items.add(file);
+        input.files = dataTransfer.files;
 
         const fakeEvent = {
-          target,
-          currentTarget: target,
+          target: input,
+          currentTarget: input,
           preventDefault: () => {},
           stopPropagation: () => {},
           nativeEvent: new Event('change'),
