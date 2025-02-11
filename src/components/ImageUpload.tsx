@@ -11,6 +11,7 @@ interface ImageUploadProps {
   value: string;
   onChange: (url: string) => void;
   accept?: string;
+  className?: string;
 }
 
 export function ImageUpload({ value, onChange, accept }: ImageUploadProps) {

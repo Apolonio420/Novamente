@@ -2,6 +2,7 @@
 
 import { X } from "lucide-react";
 import { useEffect } from "react";
+import Image from "next/image";
 
 interface ImageModalProps {
   imageUrl: string;
@@ -33,10 +34,12 @@ export function ImageModal({ imageUrl, onClose }: ImageModalProps) {
         className="relative max-w-[90vw] max-h-[90vh]"
         onClick={e => e.stopPropagation()}
       >
-        <img
+        <Image
           src={imageUrl}
-          alt="Imagen generada"
-          className="w-auto h-auto max-w-full max-h-[90vh] object-contain"
+          alt="Preview"
+          width={512}
+          height={512}
+          className="max-w-full h-auto"
         />
       </div>
     </div>

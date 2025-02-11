@@ -1,5 +1,8 @@
+"use client";
+
 import { Separator } from "@/components/ui/separator";
 import { ImageUpload } from "@/components/ImageUpload";
+import { useState } from "react";
 
 const styles = [
   { image: '/style1.png', prompt: 'Un bosque mágico con niebla al amanecer' },
@@ -7,6 +10,8 @@ const styles = [
 ];
 
 export default function StylesPage() {
+  const [imageUrl, setImageUrl] = useState("");
+
   return (
     <div className="container max-w-4xl py-6 lg:py-10">
       <div className="flex flex-col items-start gap-4 md:flex-row md:justify-between md:gap-8">
@@ -20,7 +25,10 @@ export default function StylesPage() {
       <Separator className="my-4" />
       
       <div className="grid gap-8">
-        <ImageUpload />
+        <ImageUpload 
+          value={imageUrl}
+          onChange={setImageUrl}
+        />
       </div>
     </div>
   );
