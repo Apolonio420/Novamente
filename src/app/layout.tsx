@@ -7,6 +7,7 @@ import { Sidebar } from "@/components/Sidebar";
 import { usePathname } from "next/navigation";
 import { Toaster } from "@/components/ui/sonner";
 import { useUser } from "@clerk/nextjs";
+import Image from "next/image";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -50,7 +51,14 @@ export default function RootLayout({
 				<div>
 					<header className="bg-primary p-4 flex items-center justify-between border-b-2 border-gray-700">
 						<div className="flex items-center">
-							<img src="/logo.png" alt="Novamente" className="h-10 mr-2" />
+							<Image
+								src="/logo.png"
+								alt="Logo"
+								width={40}
+								height={40}
+								className="rounded-full"
+								priority
+							/>
 							<h1 className="text-xl font-bold">Novamente</h1>
 						</div>
 						<nav className="flex space-x-4">

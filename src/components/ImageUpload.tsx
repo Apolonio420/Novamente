@@ -5,6 +5,7 @@ import { Button } from "./ui/button";
 import { Upload, Loader2, Check } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { useDropzone } from "react-dropzone";
+import Image from "next/image";
 
 interface ImageUploadProps {
   value: string;
@@ -87,9 +88,11 @@ export function ImageUpload({ value, onChange, accept }: ImageUploadProps) {
       {/* Previsualización de la imagen */}
       {value && (
         <div className="relative w-32 h-32 mx-auto overflow-hidden rounded-lg border">
-          <img
+          <Image
             src={value}
             alt="Vista previa"
+            width={128}
+            height={128}
             className="w-full h-full object-cover"
           />
         </div>

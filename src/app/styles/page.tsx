@@ -1,3 +1,6 @@
+import { Separator } from "@/components/ui/separator";
+import { ImageUpload } from "@/components/ImageUpload";
+
 const styles = [
   { image: '/style1.png', prompt: 'Un bosque mágico con niebla al amanecer' },
   { image: '/style2.png', prompt: 'Una ciudad futurista con luces de neón' },
