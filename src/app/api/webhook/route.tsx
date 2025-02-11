@@ -1,40 +1,40 @@
-import { WorkflowRunWebhookBody$inboundSchema as WebhookParser } from "comfydeploy/models/components";
+import { NextRequest, NextResponse } from "next/server";
 import { db } from "@/db/db";
 import { runs } from "@/db/schema";
 import { eq } from "drizzle-orm";
-import { NextResponse } from "next/server";
 
-export async function POST(request: Request) {
+export async function POST(request: NextRequest) {
   try {
-    const parseData = WebhookParser.safeParse(
-      await request.json()
-    );
+    const data = await request.json();
+    const runId = data.run_id;
 
-    if (!parseData.success) {
-      console.error("Invalid webhook data:", parseData.error);
-      return NextResponse.json({ message: "error" }, { status: 400 });
+    if (!runId) {
+      return NextResponse.json(
+        { error: "No run_id provided" },
+        { status: 400 }
+      );
     }
 
-    const data = parseData.data;
-    console.log("Webhook data:", data); // Para ver la estructura exacta
-
-    // Actualizar la base de datos
-    await db.update(runs)
+    // Actualizar el estado en la base de datos
+    await db
+      .update(runs)
       .set({
         live_status: data.status,
         progress: data.progress || 0,
-        // Asegurarnos de que la URL existe antes de intentar acceder
         ...(data.outputs?.[0]?.data?.images?.[0] && {
-          image_url: typeof data.outputs[0].data.images[0] === 'string' 
+          image_url: typeof data.outputs[0].data.images[0] === 'string'
             ? data.outputs[0].data.images[0]
-            : data.outputs[0].data.images[0].url
+            : null
         })
       })
-      .where(eq(runs.run_id, data.runId)); // Usar runId en lugar de run_id
+      .where(eq(runs.run_id, runId));
 
-    return NextResponse.json({ message: "success" }, { status: 200 });
+    return NextResponse.json({ success: true });
   } catch (error) {
     console.error("Error processing webhook:", error);
-    return NextResponse.json({ message: "error" }, { status: 500 });
+    return NextResponse.json(
+      { error: "Error processing webhook" },
+      { status: 500 }
+    );
   }
 }
