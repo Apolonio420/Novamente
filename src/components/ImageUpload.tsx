@@ -3,6 +3,8 @@
 import { useCallback, useState } from "react";
 import { Button } from "./ui/button";
 import { Upload, Loader2, Check } from "lucide-react";
+import { cn } from "@/lib/utils";
+import { useDropzone } from "react-dropzone";
 
 interface ImageUploadProps {
   value: string;
@@ -45,41 +47,42 @@ export function ImageUpload({ value, onChange, accept }: ImageUploadProps) {
     }
   }, [onChange]);
 
+  const { getRootProps, getInputProps, isDragActive } = useDropzone({
+    onDrop: (acceptedFiles) => {
+      const file = acceptedFiles[0];
+      if (file) {
+        onFileChange({ target: { files: [file] } } as React.ChangeEvent<HTMLInputElement>);
+      }
+    },
+    accept: accept,
+  });
+
+  const open = () => {
+    // Implementation of open function
+  };
+
   return (
     <div className="space-y-4">
       {/* Botón de carga */}
-      <Button
-        type="button"
-        variant="outline"
-        disabled={loading}
-        className="w-full h-20 relative"
-        asChild
+      <div 
+        {...getRootProps()}
+        className={cn(
+          "group relative mt-8 grid h-48 w-full cursor-pointer place-items-center rounded-lg border-2 border-dashed border-gray-300 bg-gray-50 transition-colors hover:border-gray-400",
+          isDragActive && "border-blue-500",
+          className
+        )}
       >
-        <label className="cursor-pointer flex items-center justify-center">
-          {loading ? (
-            <div className="flex items-center gap-2">
-              <Loader2 className="w-5 h-5 animate-spin" />
-              <span>Cargando...</span>
-            </div>
-          ) : value ? (
-            <div className="flex items-center gap-2">
-              <Check className="w-5 h-5 text-green-500" />
-              <span>Cambiar foto</span>
-            </div>
-          ) : (
-            <div className="flex items-center gap-2">
-              <Upload className="w-5 h-5" />
-              <span>Subir Foto</span>
-            </div>
-          )}
-          <input
-            type="file"
-            accept={accept}
-            onChange={onFileChange}
-            className="hidden"
-          />
-        </label>
-      </Button>
+        <input {...getInputProps()} />
+        
+        <Button 
+          type="button" 
+          onClick={() => open()}
+          className="gap-2"
+        >
+          <Upload className="h-4 w-4" />
+          Subir imagen
+        </Button>
+      </div>
 
       {/* Previsualización de la imagen */}
       {value && (

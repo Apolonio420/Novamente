@@ -5,21 +5,19 @@ const styles = [
 
 export default function StylesPage() {
   return (
-    <div className="bg-background text-textLight p-6">
-      <h1 className="text-primary text-3xl mb-4">Inspírate con nuestros estilos</h1>
-      <div className="grid grid-cols-2 gap-4">
-        {styles.map((style, index) => (
-          <div key={index} className="p-4 bg-secondary rounded">
-            <img src={style.image} alt={`Estilo ${index + 1}`} />
-            <p className="mt-2">{style.prompt}</p>
-            <button
-              className="bg-accent text-white p-2 mt-2 rounded"
-              onClick={() => navigator.clipboard.writeText(style.prompt)}
-            >
-              Copiar prompt
-            </button>
-          </div>
-        ))}
+    <div className="container max-w-4xl py-6 lg:py-10">
+      <div className="flex flex-col items-start gap-4 md:flex-row md:justify-between md:gap-8">
+        <div className="flex-1 space-y-4">
+          <h1 className="inline-block text-4xl font-extrabold tracking-tight lg:text-5xl">
+            Estilos
+          </h1>
+        </div>
+      </div>
+      
+      <Separator className="my-4" />
+      
+      <div className="grid gap-8">
+        <ImageUpload />
       </div>
     </div>
   );
