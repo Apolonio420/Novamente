@@ -56,7 +56,10 @@ export function UserRuns({ deploymentId }: UserRunsProps) {
 							onClick={() => run.image_url && setSelectedImage(run.image_url)}
 						>
 							<ImageGenerationResult 
-								result={run}
+								runId={run.run_id}
+								initialStatus={run.live_status || undefined}
+								initialImageUrl={run.image_url || undefined}
+								className="w-full"
 							/>
 						</div>
 					))}

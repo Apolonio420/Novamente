@@ -30,7 +30,7 @@ export function ImageGenerationResult({
   const [retryCount, setRetryCount] = useState(0);
 
   useEffect(() => {
-    if (!runId || initialImageUrl) return;
+    if (!runId || image) return;
 
     const checkStatus = async () => {
       try {
@@ -77,7 +77,7 @@ export function ImageGenerationResult({
     checkStatus();
 
     return () => clearInterval(interval);
-  }, [runId, initialImageUrl, retryCount]);
+  }, [runId, image, retryCount]);
 
   return (
     <Card 
