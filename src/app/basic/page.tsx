@@ -4,7 +4,7 @@ import { App } from "@/components/App";
 import { UserRuns } from "@/components/UserRuns";
 import { getUserRuns } from "@/server/getUserRuns";
 import { useEffect, useState } from "react";
-import { Run } from "@/db/schema";
+import type { Run } from "@/db/schema";
 
 export default function BasicPage() {
   const [runs, setRuns] = useState<Run[]>([]);
