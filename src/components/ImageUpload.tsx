@@ -53,14 +53,19 @@ export function ImageUpload({ value, onChange, accept, className }: ImageUploadP
     onDrop: (acceptedFiles) => {
       const file = acceptedFiles[0];
       if (file) {
-        // Crear un objeto File desde el archivo aceptado
         const fakeEvent = {
           target: {
             files: [file],
             value: '',
             name: 'file',
-            type: 'file'
-          },
+            type: 'file',
+            validity: {
+              valid: true
+            },
+            validationMessage: '',
+            nodeType: 1,
+            tagName: 'INPUT'
+          } as HTMLInputElement,
           preventDefault: () => {},
           stopPropagation: () => {},
           nativeEvent: new Event('change'),
@@ -71,6 +76,10 @@ export function ImageUpload({ value, onChange, accept, className }: ImageUploadP
           eventPhase: 0,
           isTrusted: true,
           timeStamp: Date.now(),
+          type: 'change',
+          isDefaultPrevented: () => false,
+          isPropagationStopped: () => false,
+          persist: () => {}
         } as React.ChangeEvent<HTMLInputElement>;
 
         onFileChange(fakeEvent);
