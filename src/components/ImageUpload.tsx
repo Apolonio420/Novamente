@@ -14,7 +14,7 @@ interface ImageUploadProps {
   className?: string;
 }
 
-export function ImageUpload({ value, onChange, accept }: ImageUploadProps) {
+export function ImageUpload({ value, onChange, accept, className }: ImageUploadProps) {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
@@ -53,7 +53,27 @@ export function ImageUpload({ value, onChange, accept }: ImageUploadProps) {
     onDrop: (acceptedFiles) => {
       const file = acceptedFiles[0];
       if (file) {
-        onFileChange({ target: { files: [file] } } as React.ChangeEvent<HTMLInputElement>);
+        // Crear un objeto File desde el archivo aceptado
+        const fakeEvent = {
+          target: {
+            files: [file],
+            value: '',
+            name: 'file',
+            type: 'file'
+          },
+          preventDefault: () => {},
+          stopPropagation: () => {},
+          nativeEvent: new Event('change'),
+          currentTarget: null,
+          bubbles: true,
+          cancelable: true,
+          defaultPrevented: false,
+          eventPhase: 0,
+          isTrusted: true,
+          timeStamp: Date.now(),
+        } as React.ChangeEvent<HTMLInputElement>;
+
+        onFileChange(fakeEvent);
       }
     },
     accept: accept,
