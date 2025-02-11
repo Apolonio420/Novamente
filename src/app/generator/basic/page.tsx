@@ -1,5 +1,6 @@
 "use client";
 
+import React from 'react';
 import { GeneratorLayout } from "@/components/GeneratorLayout";
 import { UserRuns } from "@/components/UserRuns";
 import { Input } from "@/components/ui/input";
