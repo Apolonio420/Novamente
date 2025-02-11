@@ -10,6 +10,8 @@ export async function POST(req: Request) {
 
     const formData = await req.formData();
     const file = formData.get("file") as File;
+    
+    console.log("Received file:", file?.name, file?.type); // Log para debug
 
     if (!file) {
       return NextResponse.json(
@@ -38,14 +40,14 @@ export async function POST(req: Request) {
     }
 
     const data = await response.json();
-    console.log("ComfyDeploy upload response:", data);
+    console.log("ComfyDeploy response:", data); // Log para debug
 
     return NextResponse.json({
       file_url: data.file_url,
       message: "File uploaded successfully"
     });
   } catch (error: any) {
-    console.error("Error uploading file:", error);
+    console.error("Error details:", error); // Log más detallado del error
     return NextResponse.json(
       { 
         error: "Error uploading file",
