@@ -7,6 +7,7 @@ import { ScrollArea } from "./ui/scroll-area";
 import { ImageModal } from "./ImageModal";
 import { useState } from "react";
 import { ImageIcon } from "lucide-react";
+import { ShirtMockupEditor } from "./ShirtMockupEditor";
 
 interface UserRunsProps {
 	deploymentId?: string;
@@ -55,9 +56,7 @@ export function UserRuns({ deploymentId }: UserRunsProps) {
 							onClick={() => run.image_url && setSelectedImage(run.image_url)}
 						>
 							<ImageGenerationResult 
-								runId={run.run_id}
-								initialStatus={run.live_status || undefined}
-								initialImageUrl={run.image_url || undefined}
+								result={run}
 							/>
 						</div>
 					))}
@@ -65,7 +64,7 @@ export function UserRuns({ deploymentId }: UserRunsProps) {
 			</ScrollArea>
 
 			{selectedImage && (
-				<ImageModal
+				<ShirtMockupEditor 
 					imageUrl={selectedImage}
 					onClose={() => setSelectedImage(null)}
 				/>

@@ -6,6 +6,7 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { cn } from "@/lib/utils";
 import { useEffect, useState } from "react";
 import { Card } from "./ui/card";
+import Image from "next/image";
 
 interface ImageGenerationResultProps {
   runId: string;
@@ -91,10 +92,13 @@ export function ImageGenerationResult({
           className="w-full h-full"
           onClick={onClick}
         >
-          <img 
-            src={image} 
-            alt="Generated image" 
-            className="w-full h-full object-cover"
+          <Image
+            src={image}
+            alt="Generated"
+            className="rounded-lg object-cover"
+            width={400}
+            height={400}
+            quality={90}
           />
         </button>
       )}

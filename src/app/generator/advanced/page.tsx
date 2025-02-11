@@ -125,7 +125,6 @@ export default function AdvancedGeneratorPage() {
     <GeneratorLayout 
       inputs={inputs}
       title="Generador Avanzado"
-      action={generateButton}
     >
       <UserRuns />
     </GeneratorLayout>
