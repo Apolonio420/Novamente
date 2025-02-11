@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { auth } from "@clerk/nextjs";
+import { auth } from "@clerk/nextjs/server";
 
 export const runtime = "edge";
 
@@ -27,7 +27,6 @@ export async function POST(req: Request) {
       method: "POST",
       headers: {
         "Authorization": `Bearer ${process.env.COMFY_DEPLOY_API_KEY}`
-        // No incluir Content-Type, fetch lo establece automáticamente con el boundary correcto
       },
       body: uploadFormData
     });
