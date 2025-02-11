@@ -4,13 +4,13 @@ import { useCallback, useState } from "react";
 import { Button } from "./ui/button";
 import { Upload, Loader2, Check } from "lucide-react";
 import { cn } from "@/lib/utils";
-import { useDropzone } from "react-dropzone";
+import { useDropzone, Accept } from "react-dropzone";
 import Image from "next/image";
 
 interface ImageUploadProps {
   value: string;
   onChange: (url: string) => void;
-  accept?: string;
+  accept?: Accept;
   className?: string;
 }
 
@@ -83,7 +83,7 @@ export function ImageUpload({ value, onChange, accept, className }: ImageUploadP
         onFileChange(fakeEvent);
       }
     },
-    accept: accept,
+    accept,
   });
 
   const open = () => {
