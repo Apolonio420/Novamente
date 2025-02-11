@@ -2,26 +2,29 @@ import { db } from "@/db/db";
 import { runs } from "@/db/schema";
 import { auth } from "@clerk/nextjs/server";
 import { desc, eq } from "drizzle-orm";
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 
-export async function GET() {
+export async function GET(request: NextRequest) {
   try {
     const { userId } = auth();
     if (!userId) {
-      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+      return NextResponse.json(
+        { error: "No autorizado" },
+        { status: 401 }
+      );
     }
 
     const userRuns = await db
       .select()
       .from(runs)
       .where(eq(runs.user_id, userId))
-      .orderBy(desc(runs.createdAt));
+      .orderBy(desc(runs.created_at));
 
     return NextResponse.json(userRuns);
   } catch (error) {
-    console.error("Error fetching runs:", error);
+    console.error("Error fetching user runs:", error);
     return NextResponse.json(
-      { error: "Failed to fetch runs" },
+      { error: "Error al obtener las imágenes" },
       { status: 500 }
     );
   }
