@@ -2,6 +2,7 @@
 import { useState, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import { Slider } from '@/components/ui/slider';
+import Image from 'next/image';
 
 export const ShirtMockupEditor = ({ imageUrl, onClose }: { imageUrl: string, onClose: () => void }) => {
   const [processedImage, setProcessedImage] = useState<string | null>(null);
@@ -48,10 +49,13 @@ export const ShirtMockupEditor = ({ imageUrl, onClose }: { imageUrl: string, onC
                 top: '30%'
               }}
             >
-              <img
+              <Image
                 src={processedImage}
                 alt="Design"
                 className="w-full h-full object-contain"
+                width={400}
+                height={400}
+                quality={85}
               />
             </div>
           )}
